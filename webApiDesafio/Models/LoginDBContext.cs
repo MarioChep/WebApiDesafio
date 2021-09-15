@@ -8,7 +8,7 @@ namespace webApiDesafio.Models
 {
     public class LoginDBContext : DbContext
     {
-        public DbSet<Cuenta> Cuentas { get; set; }
+        public DbSet<Login> Logins { get; set; }
         public LoginDBContext()
         {
 

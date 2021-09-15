@@ -4,47 +4,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using webApiDesafio.Models;
 
 namespace webApiDesafio.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        // GET api/values
+        private readonly LoginDBContext dBContext;
+        public LoginController(LoginDBContext dbContext)
+        {
+            dBContext = dBContext;
+        }
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<IEnumerable<Login>> Get()
         {
-            return Ok(
-               new object[] {
-                    new { Id = 1, Nombre = "Cliente 1", Apellido = "Apellido 1" },
-                    new { Id = 2, Nombre = "Cliente 2", Apellido = "Apellido 2" }
-           });
+            return Ok(dBContext.Logins.ToList());
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpPost("login")]
+        public ActionResult Post([FromBody] Login login)
         {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            dBContext.Logins.Add(login);
+            dBContext.SaveChanges();
+            return Ok();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace webApiDesafio.Models
 {
-    public class Logins
+    public class Login
     {
         [Key]
         public int Id { get; set; }

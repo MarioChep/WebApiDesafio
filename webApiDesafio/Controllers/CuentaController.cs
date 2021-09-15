@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using webApiDesafio.Models;
+using webApiDesafio.Repo;
 
 namespace webApiDesafio.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CuentaController : ControllerBase
     {
         private readonly CuentaDBContext dBContext;
@@ -22,8 +23,15 @@ namespace webApiDesafio.Controllers
         {
             return Ok(dBContext.Cuentas.ToList());
         }
-     
-        [HttpPost]
+
+        [HttpGet]
+        public IActionResult Get2()
+        {
+            RPData rpCli = new RPData();
+            return Ok(rpCli.ObtenerCuenta());
+        }
+
+        [HttpPost("register")]
         public ActionResult Post([FromBody] Cuenta cuenta)
         {
             dBContext.Cuentas.Add(cuenta);
